@@ -1,12 +1,15 @@
 name: Docker Build And Push To Docker Hub
 
 on:
+  push:
+    branches:
+    - master
   # test
 #  schedule:
 #    - cron: '0 10 * * *' # everyday at 10am
-  push:
-    tags:
-      - 'v*.*.*'
+#   push:
+#     tags:
+#       - 'v*.*.*'
 #  pull_request:
 
 env:
