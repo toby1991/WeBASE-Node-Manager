@@ -36,7 +36,7 @@ __root=$(realpath -s "${__root}")
 
 
 ########################### properties config ##########################
-image_organization=webasepro
+image_organization=toby1991
 image_name="webase-node-mgr"
 docker_push="no"
 latest_tag=latest
