@@ -29,30 +29,6 @@ jobs:
         with:
           arguments: clean build -x test
 
-      - name: Get branch name
-        uses: nelonoel/branch-name@v1.0.1
-
-      - name: Fetch tag
-        run: |
-          git fetch --tags --force
-
-      - name: Get git tag
-        uses: little-core-labs/get-git-tag@v3.0.1
-        id: tag_data
-        with:
-          tagRegex: (.*)  # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
-          tagRegexGroup: 1 # Optional. Default is 1.
-
-      - name: Set docker tag from tag
-        id: set_docker_tag
-        run: |
-          [[ ${{github.ref}} == */tags/* ]] && DOCKER_TAG="${GIT_TAG_NAME}" || DOCKER_TAG="${BRANCH_NAME}"
-          DOCKER_TAG="${{ secrets.DOCKER_WEBASEPRO_ORG }}/${DOCKER_REPOSITORY}:${DOCKER_TAG}"
-
-
-          echo "New docker tag is ${DOCKER_TAG}"
-          echo "::set-output name=docker_tag::$(echo ${DOCKER_TAG})"
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -78,7 +54,7 @@ jobs:
           push: true
           file: ./docker/build/Dockerfile
           platforms: linux/amd64
-          tags: ${{ steps.set_docker_tag.outputs.docker_tag }}
+          tags: v3.0.0
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
